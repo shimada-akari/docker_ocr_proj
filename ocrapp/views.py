@@ -27,9 +27,10 @@ class OcrView(generic.FormView):
             tool = tools[0]
             builder = pyocr.builders.TextBuilder(tesseract_layout=6)
             result = tool.image_to_string(img, lang="eng", builder=builder)
-            result = "\n" + result
+            # result = "\n" + result
+            print(result)
             context = {
-                "result" : result, 
+                "result" : result,
                 "image" : imgmodel.img
             }
 

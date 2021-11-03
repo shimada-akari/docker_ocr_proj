@@ -1,4 +1,10 @@
 {%extends './base.html'%} 
+{% load static %}
+
+{% block head%}
+<script type="text/javascript" src="{% static 'javascript/ocrapp.js' %}"></script>
+
+{% endblock head%}
 
 {%block content%}
 <body>
@@ -6,24 +12,39 @@
     <p class="text-white-75 font-weight-light mb-5 mt-5"> <strong>ソースコードの文字起こし</strong></p>
     <form method ="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="img" id="img_upload">
-        
-        <button class="btn btn-primary btn-xl" type="submit">文字起こしをする</button>
+
+        <div class="input-group">
+            <input type="file" class="form-control" id="img_upload" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="img" onchange="ImagePreview(this);">
+            <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04" >Button</button>
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <img id="img_preview" class="img-fluid" alt="" >
+              </div>
+            </div>
+        </div>
+
     </form>
     <br>
-
+    </div>
 
     {% if image %}
-    
-        <img src= "{{image.url}}" class="w-100 p-3" alt="">
-        <p style="white-space: pre-wrap;">
-            <code>
-                {{result}}
-            </code>
-        </p>
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <img src= "{{image.url}}" class="img-fluid" alt="">
+          </div>
+          <div class="col">
+            <code style="white-space: pre-wrap; ">{{result}}</code>
+          </div>
+        </div>
+    </div>
 
     {% endif %}
-    </div>
+    
 
 </body>
 {%endblock content%}
