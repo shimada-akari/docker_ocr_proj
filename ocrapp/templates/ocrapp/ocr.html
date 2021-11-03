@@ -3,12 +3,12 @@
 {%block content%}
 <body>
     <div class="container">
-    <p class="text-white-75 font-weight-light mt-5"><strong>文字起こし</strong></p>
-    <p class="text-white-75 font-weight-light mb-5"> <strong>画像をアップロード </strong></p>
+    <p class="text-white-75 font-weight-light mb-5 mt-5"> <strong>ソースコードの文字起こし</strong></p>
     <form method ="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="img">
-        <button class="btn btn-primary btn-xl" type="submit">Judge</button>
+        <input type="file" name="img" id="img_upload">
+        
+        <button class="btn btn-primary btn-xl" type="submit">文字起こしをする</button>
     </form>
     <br>
 
@@ -16,12 +16,12 @@
     {% if image %}
     
         <img src= "{{image.url}}" class="w-100 p-3" alt="">
-        <div class="alert alert-light" role="alert" >
-            <p style="white-space: pre-wrap;">
+        <p style="white-space: pre-wrap;">
+            <code>
                 {{result}}
-            </p>
+            </code>
+        </p>
 
-        </div>
     {% endif %}
     </div>
 

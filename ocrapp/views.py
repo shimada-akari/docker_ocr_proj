@@ -16,21 +16,25 @@ class OcrView(generic.FormView):
         shutil.rmtree(MEDIA_ROOT)
         os.mkdir(MEDIA_ROOT)
         form = ImgForm(request.POST, request.FILES)
-        # print(form)
-        imgmodel = ImageModel()
-        imgmodel.img = request.FILES["img"]
-        imgmodel.save()
-        img = Image.open(request.FILES["img"])
-        
+        if form.is_valid():
+            imgmodel = ImageModel()
+            imgmodel.img = request.FILES["img"]
+            imgmodel.save()
+            img = Image.open(request.FILES["img"])
+            
 
-        tools = pyocr.get_available_tools()
-        tool = tools[0]
-        builder = pyocr.builders.TextBuilder()
-        result = tool.image_to_string(img, lang="eng", builder=builder)
-        result = "\n16\n17\n18\n19\n20\n21\n22\n23\n24"
-        context = {
-            "result" : result, 
-            "image" : imgmodel.img
-        }
+            tools = pyocr.get_available_tools()
+            tool = tools[0]
+            builder = pyocr.builders.TextBuilder(tesseract_layout=6)
+            result = tool.image_to_string(img, lang="eng", builder=builder)
+            result = "\n" + result
+            context = {
+                "result" : result, 
+                "image" : imgmodel.img
+            }
 
-        return render(request, self.template_name, context)
+            return render(request, self.template_name, context)
+
+        else:
+            context = {}
+            return render(request, self.template_name, context)

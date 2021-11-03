@@ -1,4 +1,4 @@
 from django.db import models
 
 class ImageModel(models.Model):
-    img = models.ImageField(blank=True, null=True, verbose_name="画像")
+    img = models.ImageField(blank=False, null=False, verbose_name="画像")
